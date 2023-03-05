@@ -1,51 +1,63 @@
 import sys
 import threading
+import os
 
 
-def compute_height(n, parents):
+def compute_height(num_nodes, parents):
+    
+    children = {i: [] for i in range(num_nodes)}
 
-    koks = [[] for _ in range(n)]
-    root_node = None
-
-    for child_node, parent_node in enumerate(parents):
+    root = None
+    for i in range(num_nodes):
         
-        if parent_node == -1:
-            root_node = child_node
+        parent = parents[i]
+        
+        if parent == -1:
+            root =i
             
         else:
-            koks[parent_node].append(child_node)
+            children[parent].append(i)
 
-    def garums(node):
+    def height(node):
         
-        height = 1
-        
-        if not koks[node]:
-            
-            return height
+        if not children[node]:
+            return 1
         
         else:
-            for child in koks[node]:
-                
-                height = max(height, garums(child))
+            return 1 +max(height(child) for child in children[node])
 
-            return height + 1
-        
-    return garums(root_node)
+    return height(root)
 
 
 def main():
     
+    input_type = input("Enter 'F' for file, or 'I' for input: ")
     
+    if "I" in input_type:
+        num_nodes = int(input("Enter the number of nodes: "))
+        parents = list(map(int, input("Enter the parent nodes devided by spaces: ").split()))
         
-        n = int(input("ievadiet 'nodes' daudzumu: "))
-        parents = list(map(int, input("ievadiet vērtības atdalot ar atstarpi: ").split()))
-       
-   
+    elif "F" in input_type:
+        path = "./test/"
+        filename = input("Enter the name of file: ")
+        file_path = os.path.join(path, filename)
 
-        print(compute_height(n, parents))
+        if "a" not in filename:
+            try:
+                with open(file_path) as f:
+                    num_nodes = int(f.readline().strip())
+                    parents = list(map(int, f.readline().strip().split()))
+                    
+            except Exception as e:
+                print("Error:", str(e))
+                return
+            
+    else:
+        print("Invalid input type. Please enter 'I' or 'F'.")
+        return
 
-
-# Increase recursion depth limit and stack size for larger inputs.
-sys.setrecursionlimit(10**7)
-threading.stack_size(2**27)
+    print(compute_height(num_nodes, parents))
+    
+sys.setrecursionlimit(107)  # max depth of recursion
+threading.stack_size(227)  # new thread will get stack of such size
 threading.Thread(target=main).start()

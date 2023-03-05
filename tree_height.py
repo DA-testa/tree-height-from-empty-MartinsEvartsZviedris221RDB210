@@ -5,8 +5,8 @@ import os
 def compute_height(n, parents):
     
     children = {i: [] for i in range(n)}
-
     root = None
+    
     for i in range(n):
         parent = parents[i]
         

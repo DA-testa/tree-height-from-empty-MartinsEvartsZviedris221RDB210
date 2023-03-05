@@ -35,7 +35,7 @@ def compute_height(n, parents):
 
 def main():
     
-    input_type = input("Ievadiet 'I' ja vēlaties skaitļus ievadīt no tastatūras vai 'F' ja vēlaties no faila ievadīt: ")
+    input_type = input()
 
     if input_type == "I":
         

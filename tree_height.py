@@ -35,37 +35,14 @@ def compute_height(n, parents):
 
 def main():
     
-    input_type = input()
-
-    if input_type == "I":
+    
         
         n = int(input("ievadiet 'nodes' daudzumu: "))
         parents = list(map(int, input("ievadiet vērtības atdalot ar atstarpi: ").split()))
        
-    elif input_type == "F":
-        
-        file_name = input("ievadiet faila nosaukumu: ")
-        
-        if "a" in file_name:
-            
-            print("faila nosaukums nedr;ikst saturēt burtu 'a'")
-            return
-        
-        try:
-            
-            with open(f"./test/{file_name}", "r") as f:
-                n = int(f.readline())
-                parents = list(map(int, f.readline().split()))
-                
-        except Exception as e:
-            print(f"Error: {e}")
-            return
-        
-    else:
-        print("Error: Invalid input type.")
-        return
+   
 
-    print(compute_height(n, parents))
+        print(compute_height(n, parents))
 
 
 # Increase recursion depth limit and stack size for larger inputs.
